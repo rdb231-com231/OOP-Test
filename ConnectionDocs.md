@@ -3,12 +3,13 @@
 ## Methods and uses:
 |Method  |Result  | Common Use |
 |--|--| -- |
-|[`.__init__` & `dataconnect(connection, password)`](#database-init-method)|Creates the Database| ___Required___ |
-|`.append(key, content)` & `.read(key)`| writes or reads content on a key |Base Methods |
-|`.point` & `.catch`|points or catches a pointer associated with a key, storing content| Medium Methods
-| `.change_` Methods | changes kname, pointer or content of a key. | Medium Methods
-| `__enter__` & `__exit__` | calls a temporary database using `with... as`|Advanced Methods
-| `__len__` & `__contains__` | check the length `len()`, or if the database/keywords database contains a kname content or pointer `Any in dataconnect`| Advanced Methods
+|[`.__init__` & `dataconnect(connection, password)`](#database-__init__-method)|Creates the Database| ___Required___ |
+|[`.append(key, content)` & `.read(key)`](#database-append--read-methods)| writes or reads content on a key |Base Methods |
+|[`.point` & `.catch`](#database-point--catch-methods)|points or catches a pointer associated with a key, storing content| Medium Methods
+|[`.log()` & `.catchLog()` Methods](#database-log--catchlog-methods)| Prints out the value of the Key or Pointer | Medium Methods
+|[`.change_` Methods](#database-change_-methods)| changes kname, pointer or content of a key. | Medium Methods
+|[`__enter__` & `__exit__`](#database-with-as--__enter__--__exit__-methods)| calls a temporary database using `with... as`|Advanced Methods
+| [`__len__` & `__contains__`](#database-__len__--__contains__) | check the length `len()`, or if the database/keywords database contains a kname content or pointer `Any in dataconnect`| Advanced Methods
 ---
 
 
