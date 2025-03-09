@@ -3,7 +3,7 @@
 ## Methods and uses:
 |Method  |Result  | Common Use |
 |--|--| -- |
-|`.__init__` & `dataconnect(connection, password)`|Creates the Database| ___Required___ |
+|[`.__init__` & `dataconnect(connection, password)`](#database-init-method)|Creates the Database| ___Required___ |
 |`.append(key, content)` & `.read(key)`| writes or reads content on a key |Base Methods |
 |`.point` & `.catch`|points or catches a pointer associated with a key, storing content| Medium Methods
 | `.change_` Methods | changes kname, pointer or content of a key. | Medium Methods
