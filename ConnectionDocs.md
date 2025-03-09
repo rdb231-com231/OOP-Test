@@ -59,7 +59,7 @@ def read(self, kname: str) -> Any
 The `.read` calls a key to return it's content. It's very simple and mainly can be used to `print()` out a content or simply just use it's value.
 Check this example:
 ```py
-e = datacontent("net", 1234)
+e = dataconnect("net", 1234)
 e.append("myKey",  "myData")
 # database -> {'myKey': 'myData'}
 e.read("myKey")
@@ -75,7 +75,7 @@ def point(self, keywords: str, kname: str) -> None
 The `.point` method associates a `key` with it's name, it's kind of like storing the same value with 2 different names, this can be useful to have a **safe** name, that will not corrupt and one that you can play with and possibily corrupt it.
 Check out this example:
 ```py
-e = datacontent("net", 1234)
+e = dataconnect("net", 1234)
 e.append("myKey",  "myData")
 # database -> {'myKey': 'myData'}
 e.read("myKey")
@@ -89,7 +89,7 @@ def catch(self, keyword: Any) -> Any
 The `.catch` method simply calls the pointer and returns the `key` content, not it's name.  Works like read, but transformed into the pointer version. 
 
 ```py
-e = datacontent("net", 1234)
+e = dataconnect("net", 1234)
 e.append("myKey",  "myData")
 # database -> {'myKey': 'myData'}
 e.read("myKey")
@@ -108,7 +108,7 @@ The `.log` function reads the data in your Key and prints it out, while also ret
 The `.catchLog` does the same, except it works based on Keywords and not Keys.
 
 ```py
-e = datacontent("net", 1234)
+e = dataconnect("net", 1234)
 e.append("myKey",  "myData")
 e.point("myPointer", "myKey")
 e.catchLog("myPointer")
@@ -167,7 +167,7 @@ This can also result into creating 2 Databases called `client` that won't clash 
 ### Database `.__len__` & `.__contains__`
 Database comes with an integrated `.__len__` function, which means that using `len(database)` will return the actual number and not an error.
 ```py 
-e = dataconnection("myConn", 1234)
+e = dataconnect("myConn", 1234)
 # len(e) = database length + keywords database length
 
 e.append("myFile", "content!!!")
@@ -178,7 +178,7 @@ print(len(e))
 ---
 The Database also comes with an integrated `.__contains__` method, that will read through the Keywords and Database to find the item. In case of success, return bool `True` or `False`. The operation is a built-in function of python that administers customly using the `.__contains__` method.
 ```py 
-e = dataconnection("myConn", 1234)
+e = dataconnect("myConn", 1234)
 
 e.append("myFile", "content!!!")
 e.point("myPointer", "myFile")
