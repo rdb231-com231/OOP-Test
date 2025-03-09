@@ -16,7 +16,7 @@ So, don't expect much from it!
 
 ## Importing this "Library"
 
-To import this code, extract the zip folder and open it in your __IDE__. This was made in PyCharm, but others IDE's will work just fine. After opening the folder in your __IDE__ simply import the files that you want to use. 
+To import this code, download this repo and open it in your __IDE__. This was made in PyCharm, but others IDE's will work just fine. After opening the folder in your __IDE__, create a new python file (the one that you will code in, `main.py` or `index.py`) simply import the files that you want to use. 
 examples:
 ```py
 from Services import connection
