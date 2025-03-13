@@ -1,0 +1,184 @@
+# PySocket (1.2.4)
+
+## Methods and Uses
+|Method  |Result  | Common Use |
+|--|--| -- |
+| [`createSocket(socket)`](#the-createsocket-method "createSocket") | Creates a socket | __Required__ or substituted by `listen()` or `send()` |
+| [`listen(socket)` & `send(socket, content)`](#the-listen--send-methods "just click already wth") | Both call the `createSocket(socket)`, listen starts to listen to the socket and send stores content. | __Base Methods__|
+| The [`.encode()` Method](#the-encode-method "encode stuff yk") | Transforms your content into UTF-8, UTF-16 or UTF-32. | __Medium Methods__
+| The [`log()` & `file_log()` Methods](#the-log--file_log-methods "this is so basic I feel ashamed to make docs for this") | `log()` prints out your content and `file_log()` writes a file with it. | __Base & Medium Methods__ |
+| The [`force()` and `also_do()` Methods](#the-force--also_do-methods "also_do is a lame excuse for trying to add more stuff") | Force your content to change types or stop. | __Advanced Methods__ |
+| [`Dunder Methods`](#the-dunder-methods "ugly name, ugly coding") | Dunder Methods such as `.__get__()`, `.__enter__` and more... | __Advanced Methods__ |
+| [***Tips 'n Tricks!***](#tips-'n-tricks "Stupid Tips for Stupid code") | Tips and Tricks for the PySocket | __Medium to Advanced Methods__
+---
+
+### The `createSocket()` Method
+> The `createSocket()` method can easily be replaced with `listen(socket)` or `send(socket, content)` methods
+
+The `createSocket()` method initializes a PySocket socket, and is easily created with:
+```py
+mySocket = createSocket("mySocket")
+```
+---
+
+### The `listen()` & `send()` Methods
+> For use of the `listen()` & `send()`, first, you need to know that if you connect `listen()` to a socket and `send()` to another, the code might break.
+
+Listening to a socket is basically initializing the `send()` method, you can listen to multiple socket in once and check if you are listening in the [`.__getitem__`](#the-__getitem__-method) method.
+To start listening, simply use: 
+``` 
+from Services import PySocket
+
+mySocket = PySocket.listen("mySocket")
+``` 
+you can attach `PySocket.listen()` to a variable, but you won't be able to attach `.send()` in the same variable.
+If you want to initialize both in the same variable, use the [`with... as` statements](#the-__exit__-and-__enter__-methods).
+
+#### Using `send()`
+
+To initialize a `send()` use:
+```py
+from Services import PySocket
+PySocket.send("mySocket", "myContent")
+```
+Just to remember that you can combine the __above used__ method with other's __`send()` class methods__, such as: `.encode()` or `.force()` for more efficient content's.
+
+---
+
+### The `encode()` Method
+> Your content will be encoded by the built-in python method: string encode. You can encode any string using variable.encode(encoding)
+
+The `.encode()` method get's the `content` defined in the `.__init__` or `.__call__` method and encodes in a lot of encodings (check the official [PyDocs](https://docs.python.org/3.12/library/codecs.html#standard-encodings "Standard Encodings") for Encodings) and also can be implemented error handling (check the official [PyDocs](https://docs.python.org/3.12/library/stdtypes.html#str.encode "Error Handling") for Error Handling), if the Error argument is not set, it's default is `.encode()`'s default: `'strict'`.
+
+```py
+PySocket.send('mySocket', 'myContent').encode('utf-8')
+```
+
+---
+### The `log()` & `file_log()` Methods
+
+> For more detailed `file_log()` check [Tips 'n Tricks](#tips-'n-tricks "some weirdo hints")
+
+The `log()` prints out the `content` with all modifications, such as: `encoding`, `editing item` and more.
+
+```py
+e = PySocket.send("mySocket", "myContent")
+e.log()
+# Terminal: myContent
+e.encode('utf-8')
+e.log()
+# Terminal: b'myContent'
+```
+---
+#### The `file_log()` Simplicity
+
+In the other hand, `file_log()` simply logs your `content` inside a file. To write a file, use:
+```py
+e.file_log("myFile")
+```
+And it gets printed out in `myFile.txt`. After running the code, open your folder and check the `.txt` file that was just created. The file content will also get printed out in the `Terminal`.
+
+---
+
+### The `force()` & `also_do()` Methods
+
+The `.force()` method forcefully transforms your `content` into a selected item.
+The method can be called with:
+- `"int"`: Forcefully transforms your content into int, if it can't be transformed, raise an error. Can't use `.encode()` after this.
+
+- `"str"`: Forcefully transforms your content into str.
+
+- `"float"`: Transforms int into `float`, raises an error if failed. Can't use `.encode()` after this.
+
+```py
+e = PySocket.send("mySocket", "123")
+e.force("int")
+# "123" -> 123
+e.force("float")
+# 123 -> 123.00
+```
+---
+The `also_do()` method forces your content into 2 types:
+
+- `"force", cause` -> Just the simple `force()`, `cause` must be `int`, `str` or `float`.
+- `"close"` -> deletes your socket.
+
+```py
+e = PySocket.send("MySocket", "283")
+e.also_do("force", "int")
+# "283" -> 283
+e.also_do("close")
+# erases e().
+```
+
+--- 
+
+## The Dunder Methods
+
+- [`__call__`](#the-__call__-dunder) -> Changes your content
+- [`__getitem__` & `__setitem__`](#the-__getitem__-method)
+
+
+### The `__call__` Dunder
+> The `__call__` is specially great in `with... as` statements, otherwise, use: 
+> ```py
+> e = PySocket.send("mySocket", "myContent")
+> e.content = "myNewContent"
+> ```
+> For bug avoidance.
+---
+### In `send()` Class
+
+The `__call__` Dunder is very good with [`with... as`](#the-__exit__-and-__enter__-methods) temporary Sockets. 
+```py
+with listen("mySocket") as server, send("mySocket", "myContent") as client:
+	client.log()
+	# TERMINAL: myContent
+	client("myNewContent")
+	client.log()
+	# TERMINAL: myNewContent
+```
+
+The `__call__` Dunder redefines the content of the client in `send()`.
+
+---
+
+### The `__getitem__` Method
+> The `__getitem__` method calls a function that will check  any type of list present in the code if the item exists.
+ 
+### In `listen()`
+The method will search for the socket to check if it exists, it would be the same as using the `if Socket in listen()` statement.
+The method `.__setitem__()` method doesn't exist, so you can't edit the `listen()` socket "database".
+```py
+server = PySocket.listen("mySocket")
+print(server["mySocket"])
+# Terminal: True
+```
+---
+
+### The `__exit__` and `__enter__` Methods
+> Creating a `with... as` statement will make a temporary socket that will be deleted once the `with... as` ends. It will also permit you to make more than one database of `listen servers` with the same name.
+
+### Simple `with... as` Statements
+```py
+with PySocket.send("mySocket", "myContent") as client:
+	client.encode('utf-8')
+	# content = b'myContent'
+	client('123')
+	client.force('int')
+	# content = 123
+client.encode('utf-16')
+# the socket was erased, therefore this won't do anything
+```
+
+The  **simple `with... as` statements** are not the best option, but good for singular `sockets.`
+
+### Full `with... as` Statements
+The Full `with... as` Statements are combinations of 2 simple `with... as` Statements.
+
+```py
+with PySocket.listen("mySocket") as server, PySocket.send("mySocket", "myContent") as client:
+	client.log()
+	del server["mySocket"]
+# the server got deleted, therefore the send will stop
+```  
