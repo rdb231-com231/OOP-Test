@@ -1,0 +1,109 @@
+# PyCharacter (0.8)
+
+## Creating Characters
+
+> This is by far the most complicated library of 'em all, even tho it look simple, __PyCharacter__ relies on very detailed information;
+
+### The `.__init__` Method
+
+```py
+James = PyCharacter.Character(name = "James", charClass = "Archer")
+```
+for now, creating a character applies it a name and a `charClass` (that will have mechanics in the future).
+Creating a character doesn't perfectly define it tho, since you just apply a name to a character, let's see how to create stats.
+
+---
+### The `.stats` Method
+
+```
+James.stats(atk = 1, def = 2, hp = 100 elx = 0)
+```
+
+- ATK: Attack, multiplies the **power atk** or simply works solo
+- DEF: Defense, subtract **def** from **atk** and you get the damage taken by the attack
+- HP: Hitpoints, defines the max amount of damage you can take before you die.
+- ELX: Elixir, every power needs elx to be conjured.
+
+The `.stats` method apply all those stats to the character, they are mutable and may be edited from time to time, althought not recommended.
+
+---
+### Using `.powers` & `.add_powers()` Methods
+
+Powers are very complicated to create, but once you get the hang of it, become very easy. We create powers using `Dict[Str, Dict[Str, Int]`
+```py
+Powers = {
+	"Power_1": {
+		"atk": 1,
+		"elx": 2
+	},
+	"Power_2": {
+		"def": 2,
+		"elx": 3
+	}
+}
+```
+It is __required__ to have a __elx__ property in your `Powers Dict`, because it will be called once the power is used. `Atk` and `Def` are not __required__ but they are recommended to have 1 in each power (not both in same).
+To call a power __atk__, __def__ or __elx__ just use:
+```py
+James.plist["Power_1"]["atk"]
+```
+---
+
+In the method, it will look like this:
+```py
+James.powers({  
+  "FireBlaze": {  
+	  "atk": 2,  
+	  "elx": 1  
+  },  
+  "HollowGuard": {  
+	  "def": 3,  
+	  "elx": 2  
+  }  
+})
+```
+
+> ## Tips & Tricks
+> Once this called, you can now use `.attack(power)` and `.defend(power)` freely.
+> 
+> Remember that ***elx*** is **required**, the code will break without it. 
+> To create a better looking powerlist, you can create powers independently and throw it all together
+> ```py
+> HollowGuard = {
+>     "atk": 1,
+>     "def" : 3,
+>     "elx": 2
+>}
+>
+> FireBlaze = {
+>    "atk": 2,
+>    "elx": 3
+> } 
+> ```
+
+---
+
+Using the `.add_power(power)` method, you can add powers one by one. Use `.powers()` only when a lot of powers will be added;
+```py
+James.add_power(power_name = "The Force", power_stats = {  
+	"atk": 10,  
+	"elx": 8  
+})
+``` 
+---
+
+### Using the `.__getitem__()` & `.__setitem__()` Methods
+To catch the stats or powers of any Character, use: 
+```py
+James["atk"]
+# TERMINAL: 1
+```
+The `.__getitem__()` method can help you make more stuff using the same stats, but not making you have to check out what's written in `.stats()` everytime. 
+And, while we're getting items more easily, why not set a item more easily? Using the `.__setitem__()` method, works like the `.__getitem__()`.
+
+Now you can catch & change the items properties like this:
+```py
+James["def"] = 3
+James["atk"] = 3
+```
+---
